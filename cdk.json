@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/cdk-ses-app.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/deploy.ts",
   "watch": {
     "include": [
       "**"
@@ -47,5 +47,6 @@
     "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": true,
     "@aws-cdk/aws-redshift:columnId": true,
     "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": true
-  }
+  },
+  "outputsFiles": "cdk-outputs.json"
 }
