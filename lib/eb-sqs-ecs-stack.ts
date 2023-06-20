@@ -87,15 +87,14 @@ export class EbSqsEcsStack extends Stack {
     );    
 
     // Create task definition
-    const fargateTaskDefinition = new ecs.FargateTaskDefinition(
-      this,
-      "FargateTaskDef",
+    const fargateTaskDefinition = new ecs.FargateTaskDefinition( this,  "FargateTaskDef",
       {
         memoryLimitMiB: 4096,
         cpu: 2048,
         taskRole: EcsTaskRole,
         executionRole: generalExecutionRole 
-      }
+      },
+    
     );
 
     // create a task definition with CloudWatch Logs
@@ -108,7 +107,7 @@ export class EbSqsEcsStack extends Stack {
       image: ecs.ContainerImage.fromAsset("./python-sqs-app"), 
       environment: {
           queueUrl: queue.queueUrl,
-          region: process.env.CDK_DEFAULT_REGION!,
+          region: this.region,
         },
       logging,
     });
@@ -118,6 +117,7 @@ export class EbSqsEcsStack extends Stack {
       cluster,
       taskDefinition: fargateTaskDefinition,
       desiredCount: 0,
+      assignPublicIp: true
     });
     
     // Configure task auto-scaling
