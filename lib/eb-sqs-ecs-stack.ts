@@ -86,6 +86,18 @@ export class EbSqsEcsStack extends Stack {
       })
     );    
 
+    EcsTaskRole.attachInlinePolicy(
+      new iam.Policy(this, "SESAdminAccess", {
+        statements: [
+          new iam.PolicyStatement({
+            actions: ["ses:*"],
+            effect: iam.Effect.ALLOW,
+            resources: ["*"],
+          }),
+        ],
+      })
+    );  
+
     // Create task definition
     const fargateTaskDefinition = new ecs.FargateTaskDefinition( this,  "FargateTaskDef",
       {

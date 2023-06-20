@@ -3,7 +3,7 @@ import os
 
 
 sqs = boto3.client('sqs');
-ses = boto3.client('ses'); 
+
 queue_url = os.environ['queueUrl'];
 
 def read_sqs():
@@ -36,25 +36,6 @@ def delete_sqs_message(receipt_handle):
         ReceiptHandle=receipt_handle
     )
 
-def send_email(sender_email, recipient_email, subject, body):
-    response = ses.send_email(
-        Source=sender_email,
-        Destination={
-            'ToAddresses': [recipient_email]
-        },
-        Message={
-            'Subject': {
-                'Data': subject
-            },
-            'Body': {
-                'Text': {
-                    'Data': body
-                }
-            }
-        }
-    )
-    return response
-
 # Read SQS
 messages = read_sqs()
 print(f"Found messages {messages}")
@@ -69,26 +50,5 @@ else:
 
         # Delete Message 
         delete_sqs_message(message['ReceiptHandle'])
-        print(f"Finished for {message}")
-        # After deleting the SQS message
-if messages is None: 
-    print("No messages in the queue")   
-else:
-    for message in messages:
-        print(f"Activating {message}")
-        print(f"Hello")
-
-        # Delete Message 
-        delete_sqs_message(message['ReceiptHandle'])
-
-        # Send email using Amazon SES
-        sender_email = 'awsalvin@amazon.com'
-        recipient_email = 'awsalvin@amazon.com'
-        subject = 'Test SQS to SES'
-        body = 'Your TEst Email Body'
-
-        response = send_email(sender_email, recipient_email, subject, body)
-        print(f"Email sent. Message ID: {response['MessageId']}")
-
         print(f"Finished for {message}")
        
