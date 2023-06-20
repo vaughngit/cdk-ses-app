@@ -53,6 +53,21 @@ export class EbSqsEcsStack extends Stack {
     })
     const cluster = new ecs.Cluster(this, "Cluster", { vpc });
     //End- Create ECS cluster
+
+        //task execution role ― is a general role that grants permissions to start the containers defined in a task. 
+   //Those permissions are granted to the ECS agent so it can call AWS APIs on your behalf.
+   const generalExecutionRole = new iam.Role(this, `General-Task-ExecutionRole`, {
+    roleName: `ECS-Task-ExecutionRole`,
+    description: "A general role that grants permissions to start the containers defined in a task.",
+    assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
+    managedPolicies: [
+      iam.ManagedPolicy.fromAwsManagedPolicyName("CloudWatchFullAccess"),
+      iam.ManagedPolicy.fromAwsManagedPolicyName("CloudWatchLogsFullAccess"),
+      iam.ManagedPolicy.fromAwsManagedPolicyName("AWSXRayDaemonWriteAccess"),
+      iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonEC2ContainerRegistryReadOnly"),
+      iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AmazonECSTaskExecutionRolePolicy")
+    ]
+  });
     
     // Create a task role that will be used within the container
     const EcsTaskRole = new iam.Role(this, "EcsTaskRole", {
@@ -78,7 +93,8 @@ export class EbSqsEcsStack extends Stack {
       {
         memoryLimitMiB: 4096,
         cpu: 2048,
-        taskRole: EcsTaskRole
+        taskRole: EcsTaskRole,
+        executionRole: generalExecutionRole 
       }
     );
 
@@ -89,7 +105,7 @@ export class EbSqsEcsStack extends Stack {
 
     // Create container from local `Dockerfile`
     const appContainer = fargateTaskDefinition.addContainer("Container", {
-      image: ecs.ContainerImage.fromAsset("../python-sqs-app"), 
+      image: ecs.ContainerImage.fromAsset("./python-sqs-app"), 
       environment: {
           queueUrl: queue.queueUrl,
           region: process.env.CDK_DEFAULT_REGION!,
