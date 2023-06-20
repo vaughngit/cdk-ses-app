@@ -1,8 +1,8 @@
 [
     {
-      "EventBusName": "test-bus-cdk",
-      "Source": "eb-sqs-ecs",
-      "DetailType": "message-for-queue",
-      "Detail": "{\"message\":\"Hello CDK world!\"}"
+        "EventBusName": "test-bus-cdk",
+        "Source": "eb-sqs-ecs",
+        "DetailType": "message-for-queue",
+        "Detail": "{\"sender\": \"awsalvin@amazon.com\", \"recipient\": \"awsalvin@amazon.com\", \"subject\": \"Test within source object\", \"body\": \"Hello world Object converter!\"}"
     }
-  ]
+]
