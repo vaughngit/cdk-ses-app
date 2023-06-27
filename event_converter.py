@@ -7,7 +7,7 @@ input_data = [
         "DetailType": "message-for-queue",
         "Detail": {
             "sender": "awsalvin@amazon.com",
-            "recipient": "alvin@amazon.com",
+            "recipient": "awsalvin+sestesting@amazon.com",
             "subject": "Test within source object",
             "body": "Hello world Object converter!"
         }

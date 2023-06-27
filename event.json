@@ -3,6 +3,6 @@
         "EventBusName": "test-bus-cdk",
         "Source": "eb-sqs-ecs",
         "DetailType": "message-for-queue",
-        "Detail": "{\"sender\": \"awsalvin@amazon.com\", \"recipient\": \"alvin@amazon.com\", \"subject\": \"Test within source object\", \"body\": \"Hello world Object converter!\"}"
+        "Detail": "{\"sender\": \"awsalvin@amazon.com\", \"recipient\": \"awsalvin+sestesting@amazon.com\", \"subject\": \"Test within source object\", \"body\": \"Hello world Object converter!\"}"
     }
 ]
