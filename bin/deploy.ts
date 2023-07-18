@@ -21,10 +21,12 @@ new SesConfigStack(app, 'SesConfigStack', {
     domainAttr,
 });
 
+/* 
 new MessageQueueStack(app, 'queue', {
     description: 'Message Queue Stack',
     env,
 }); 
+*/
 
 new EbSqsEcsStack(app, 'sqsecs', { 
     description: 'SQS ECS Stack',

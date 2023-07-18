@@ -81,8 +81,8 @@ export class MessageQueueStack extends Stack {
             resources: [queue.queueArn],
             actions: [
               'sqs:ReceiveMessage', 
-            'sqs:DeleteMessage', 
-            'sqs:GetQueueAttributes'
+              'sqs:DeleteMessage', 
+              'sqs:GetQueueAttributes'
           ],
             effect: Effect.ALLOW,
           }),
